@@ -1,7 +1,19 @@
 let data = [
     {
+        question: "Select all Aircraft manufacturers.",
+        correct: [2, 3],
+        answers: 
+        [
+            "Tesla",
+            "Daimler",
+            "Boeing",
+            "Airbus",
+            "Volkswagen",
+        ]
+    },
+    {
         question: "What year was Elon Musk born?",
-        correct: 0,
+        correct: [0],
         answers: 
         [
             "1971",
@@ -12,7 +24,7 @@ let data = [
     },
     {
         question: "Who was the first man on the moon?",
-        correct: 1,
+        correct: [1],
         answers: 
         [
             "Elon Musk",
@@ -22,7 +34,7 @@ let data = [
     },
     {
         question: "What was the first movie directed by Quentin Tarantino?",
-        correct: 2,
+        correct: [2],
         answers: 
         [
             "Pulp Fiction",
@@ -32,4 +44,30 @@ let data = [
             "From Dusk till Dawn"
         ]
     },
+    {
+        question: "Guess my favourite animals!",
+        correct: [0, 4, 5],
+        answers: 
+        [
+            "Cat",
+            "Dog",
+            "Fish",
+            "Elefant",
+            "Monkey",
+            "Mouse",
+            "Giraffe",
+            "Frog"
+        ]
+    },
+    {
+        question: "Check all correct answers. I am born in sweden.",
+        correct: [],
+        answers: 
+        [
+            "Elon Musk",
+            "Bill Gates",
+            "Joh McAfee",
+            "Kim Dotcom"
+        ]
+    }
 ];

@@ -13,27 +13,66 @@ function Check() {
     }
     if (isChecked == 0) {
         // check question
-        answer_id = -1;
-        for (let i = 0; i < data[questionID].answers.length; i++) {
-            id = "a" + i
-            if (document.getElementById(id).checked) {
-                answer_id = i;
+
+
+        // Check if radio buttons have been created
+        if ( data[questionID].correct.length == 1) {
+            answeredTotal++;
+            answer_id = -1;
+            // Find out which radio button was checked
+            for (let i = 0; i < data[questionID].answers.length; i++) {
+                id = "a" + i
+                if (document.getElementById(id).checked) {
+                    answer_id = i;
+                }
+            }
+            
+            // No radio button was checked
+            if (answer_id == -1) {
+                document.getElementById("correction").innerHTML = "No button checked."
+                answeredTotal--;
+                return;
+            }
+            // Correct radio button was checked
+            else if (answer_id == data[questionID].correct[0]) {
+                document.getElementById("correction").innerHTML = "<b>Correct!<b>"
+                answeredCorrect++;
+            }
+            // Wrong radio button was checked
+            else {
+                document.getElementById("correction").innerHTML = "<b>Wrong answer!</b> <br>" + 
+                    "solution is: <br>" + data[questionID].answers[data[questionID].correct[0]];
             }
         }
-        answeredTotal++;
-        // No radio button has been checked
-        if (answer_id == -1) {
-            document.getElementById("correction").innerHTML = "Please give an answer."
-        }
-        // Correct radio button has been checked
-        else if (answer_id == data[questionID].correct) {
-            document.getElementById("correction").innerHTML = "<b>Correct!<b>"
-            answeredCorrect++;
-        }
-        // Wrong radio button has been checked
+        // It is a multiple choice question.
         else {
-            document.getElementById("correction").innerHTML = "<b>Wrong answer!</b> <br>" + 
-                "solution is: <br>" + data[questionID].answers[data[questionID].correct];
+            answeredTotal++;
+            answer_id = [];
+            // Find out which checkboxes were checked
+            for (let i = 0; i < data[questionID].answers.length; i++) {
+                id = "a" + i
+                if (document.getElementById(id).checked) {
+                    answer_id.push(i);
+                }
+            }
+            
+            answer_id.sort();
+            sortedCorrect = data[questionID].correct.sort();
+            let correctAnswered = equalArray(answer_id, sortedCorrect);
+
+            // Each checked box was correct
+            if (correctAnswered) {
+                document.getElementById("correction").innerHTML = "<b>Correct!<b>"
+                answeredCorrect++;
+            }
+            // Wrong checkboxes were checked
+            else {
+                text = "<b>Wrong answer!</b> <br> Correct are: <br>";
+                for (let i = 0; i < data[questionID].correct.length; i++) {
+                    text += "[" + data[questionID].correct[i] + "] " + data[questionID].answers[data[questionID].correct[i]] + "<br>";
+                }
+                document.getElementById("correction").innerHTML = text;
+            }
         }
         isChecked = 1;
         updateStatistics();
@@ -68,12 +107,37 @@ function drawQuestion() {
     document.getElementById("correction").innerHTML = "";
     document.getElementById("question").innerHTML = data[questionID].question;
     let text = "";
-    for (let i = 0; i < data[questionID].answers.length; i++) {
-        idc = "a" + i + "c"
-        id = "a" + i
-        text += '<input type="radio" id="' + id + 
-        '" name="answerPick"> <label for="' + id + 
-        '" id="' + idc + '">' + data[questionID].answers[i] + '</label><br>'
-    } 
+
+    // Check if radio buttons have been created
+    if ( data[questionID].correct.length == 1) {
+        for (let i = 0; i < data[questionID].answers.length; i++) {
+            idc = "a" + i + "c"
+            id = "a" + i
+            text += '<input type="radio" id="' + id + '" name="answerPick">' +
+            '<label for="' + id + '" id="' + idc + '">' + data[questionID].answers[i] + '</label><br>'
+        }
+    }
+    // It is a multiple choice question.
+    else {
+        for (let i = 0; i < data[questionID].answers.length; i++) {
+            idc = "a" + i + "c"
+            id = "a" + i
+            text += '<input type="checkbox" id="' + id + '" name="answerPick">' + 
+            '<label for= "' + id + '" id= "' + idc + '">' + data[questionID].answers[i] + '</label><br>'
+        }
+    }
     document.getElementById("answers").innerHTML = text;
+}
+
+
+function equalArray(array1, array2) {
+    if (array1.length === array2.length) {
+      return array1.every((element, index) => {
+        if (element === array2[index]) {
+          return true;
+        }
+        return false;
+      });
+    }
+    return false;
 }
