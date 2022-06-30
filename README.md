@@ -1,2 +1,2 @@
 # jsQuizzer
-A small application to make quizzes on the web. 
+A small application to create multiple choice quizzes on the web. 
