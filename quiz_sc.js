@@ -12,9 +12,6 @@ function Check() {
         return;
     }
     if (isChecked == 0) {
-        // check question
-
-
         // Check if radio buttons have been created
         if ( data[questionID].correct.length == 1) {
             answeredTotal++;
@@ -128,7 +125,6 @@ function drawQuestion() {
     }
     document.getElementById("answers").innerHTML = text;
 }
-
 
 function equalArray(array1, array2) {
     if (array1.length === array2.length) {
