@@ -1,4 +1,7 @@
+// Configuration constants
+const RANDOM_QUESTION = true
 
+// Public variables
 questionID = 0;
 isStarted = 0;
 isChecked = 0;
@@ -75,19 +78,24 @@ function Check() {
         updateStatistics();
         return;
     }
-    // draw next question or restart quiz.
-    questionID++;
 
-    if(questionID >= data.length) {
-        document.getElementById("correction").innerHTML = "You reached the end! <br> Press submit to restart!";
-        document.getElementById("question").innerHTML = "";
-        document.getElementById("answers").innerHTML = "";
-        questionID = 0;
-        isStarted = 0;
-        isChecked = 0;
-        return;
+    // draw next question or restart quiz.
+    if (RANDOM_QUESTION) {
+        questionID = Math.floor(Math.random() * (data.length + 1));
     }
-    
+    else {
+        questionID++;
+        if(questionID >= data.length) {
+            document.getElementById("correction").innerHTML = "You reached the end! <br> Press submit to restart!";
+            document.getElementById("question").innerHTML = "";
+            document.getElementById("answers").innerHTML = "";
+            questionID = 0;
+            isStarted = 0;
+            isChecked = 0;
+            return;
+        }
+    }
+        
     drawQuestion();
     isChecked = 0;
 }
