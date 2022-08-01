@@ -1,5 +1,8 @@
 // Configuration constants
-const RANDOM_QUESTION = true
+// Ramodmize question list
+const RANDOM_QUESTION_LIST = true
+// As next question, pick a random question -> questions will be asked endless
+const RANDOM_QUESTION_PICK = false
 
 // Public variables
 questionID = 0;
@@ -10,6 +13,9 @@ answeredCorrect = 0;
 
 function Check() {
     if (isStarted == 0) {
+        if (RANDOM_QUESTION_LIST) {
+            data.sort(() => Math.random() - 0.5);
+        }
         drawQuestion();
         isStarted = 1;
         return;
@@ -78,9 +84,8 @@ function Check() {
         updateStatistics();
         return;
     }
-
     // draw next question or restart quiz.
-    if (RANDOM_QUESTION) {
+    if (RANDOM_QUESTION_PICK) {
         questionID = Math.floor(Math.random() * (data.length + 1));
     }
     else {
